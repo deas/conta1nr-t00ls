@@ -26,14 +26,6 @@ jobs:
           fetch-depth: 0
       #- uses: sigstore/cosign-installer@main
       #- uses: fluxcd/flux2/action@main
-      # - name: Setup Helm
-      #  uses: ./.github/actions/helm
-      #  with:
-      #    version: 3.8.1
-      #- name: Setup QEMU
-      #    uses: docker/setup-qemu-action@v2
-      #   with:
-      #     platforms: all
       - name: Setup Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v2
@@ -75,12 +67,6 @@ jobs:
           # platforms: linux/amd64,linux/arm/v7,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      #- name: Publish Helm chart to GHCR
-      #  run: |
-      #    helm package charts/conta1nr-t00ls
-      #    helm push conta1nr-t00ls-${{ steps.prep.outputs.VERSION }}.tgz oci://ghcr.io/deas/charts
-      #    rm conta1nr-t00ls-${{ steps.prep.outputs.VERSION }}.tgz
-      #  env:
       #- name: Sign OCI artifacts
       #    COSIGN_EXPERIMENTAL: 1
       #   run: |
@@ -88,10 +74,6 @@ jobs:
       #    cosign sign ghcr.io/deas/conta1nr-t00ls:${{ steps.prep.outputs.VERSION }}
       #    cosign sign ghcr.io/deas/charts/conta1nr-t00ls:${{ steps.prep.outputs.VERSION }}
       #    cosign sign ghcr.io/deas/manifests/conta1nr-t00ls:${{ steps.prep.outputs.VERSION }}
-      #- name: Publish helm chart
-      #  uses: deas/helm-gh-pages@master
-      #  with:
-      #    token: ${{ secrets.GITHUB_TOKEN }}
       #- uses: ./.github/actions/release-notes
       #- name: Generate release notes
       #  run: |
